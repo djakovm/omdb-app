@@ -13,6 +13,19 @@ export interface OmdbSearchResult {
   Poster: string;
 }
 
+export interface OmdbSeasonResponse {
+  Title: string;
+  Season: string;
+  Episodes: {
+    Title: string;
+    Episode: string;
+    Released: string;
+    imdbID: string;
+  }[];
+  totalSeasons?: string;
+}
+
+
 export interface OmdbItem {
   Title: string;
   Year: string;
@@ -28,4 +41,5 @@ export interface OmdbItem {
   imdbID: string;
   Type: string;
   totalSeasons?: string;
+  Ratings?: { Source: string; Value: string }[]
 }

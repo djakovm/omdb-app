@@ -1,1 +1,44 @@
-<p>show-detail works!</p>
+<ng-container *ngIf="show$ | async as show">
+  <div class="container py-4">
+    <app-title-detail [item]="show" />
+
+    @if (seasonOptions.length) {
+    <div class="mt-5">
+      <h4>Select Season</h4>
+      <select
+        [(ngModel)]="selectedSeason"
+        (change)="onSeasonSelect(selectedSeason)"
+        class="form-select w-auto mb-3"
+      >
+        <option value="">Choose...</option>
+        @for (s of seasonOptions; track s) {
+        <option [value]="s">Season {{ s }}</option>
+        }
+      </select>
+    </div>
+    } @if (episodes.length) {
+    <h5 class="mt-4 mb-3">Episodes</h5>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+      @for (ep of episodes; track ep.imdbID) {
+      <div class="col">
+        <a
+          [routerLink]="['/shows', show.imdbID, 'episode', selectedSeason, ep.Episode]"
+          [state]="{ fromShowId: show.imdbID }"
+          class="text-decoration-none"
+        >
+          <div
+            class="border rounded p-3 h-100 shadow-sm hover-shadow transition"
+          >
+            <h6 class="mb-1">
+              <strong>S{{ selectedSeason }}E{{ ep.Episode }}:</strong> {{
+              ep.Title }}
+            </h6>
+            <small class="text-muted">{{ ep.Released }}</small>
+          </div>
+        </a>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</ng-container>

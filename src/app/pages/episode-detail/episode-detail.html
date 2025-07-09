@@ -1,1 +1,20 @@
-<p>episode-detail works!</p>
+<div class="container py-4">
+  <a
+    [routerLink]="['']"
+    class="btn btn-outline-secondary mb-3"
+  >
+    Back to Home
+  </a>
+
+  @if (episode$ | async; as episode) {
+  <h2>{{ episode.Title }}</h2>
+  <p>
+    <strong>Season:</strong> {{ season }} | <strong>Episode:</strong> {{
+    episodeNumber }}
+  </p>
+  <p><strong>Released:</strong> {{ episode.Released }}</p>
+  <p><strong>Plot:</strong> {{ episode.Plot }}</p>
+  <p><strong>Actors:</strong> {{ episode.Actors }}</p>
+  <p><strong>Director:</strong> {{ episode.Director }}</p>
+  }
+</div>

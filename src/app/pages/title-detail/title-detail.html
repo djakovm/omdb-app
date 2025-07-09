@@ -1,0 +1,46 @@
+<div class="container py-4">
+  <a routerLink="/" class="btn btn-outline-secondary mb-3">Back</a>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <img
+        [src]="item.Poster !== 'N/A' ? item.Poster : 'assets/no-image.png'"
+        [alt]="item.Title"
+        class="img-fluid rounded shadow-sm"
+      />
+    </div>
+
+    <div class="col-md-8">
+      <h2 class="mb-3">
+        {{ item.Title }} <small class="text-muted">({{ item.Year }})</small>
+      </h2>
+      <p><strong>Genre:</strong> {{ item.Genre }}</p>
+      <p><strong>Runtime:</strong> {{ item.Runtime }}</p>
+      <p><strong>Plot:</strong> {{ item.Plot }}</p>
+      <p><strong>Actors:</strong> {{ item.Actors }}</p>
+      <p><strong>Director:</strong> {{ item.Director }}</p>
+      <p><strong>Writer:</strong> {{ item.Writer }}</p>
+
+      @if (item.totalSeasons) {
+      <p class="mt-3">
+        <strong>Total Seasons:</strong> {{ item.totalSeasons }}
+      </p>
+      }
+    </div>
+  </div>
+
+  @if (item.Ratings?.length) {
+  <div class="mt-5">
+    <h4>Ratings</h4>
+    <div class="row">
+      @for (rating of item.Ratings; track rating.Source) {
+      <div class="col-auto">
+        <div class="badge bg-success text-light fs-6 p-2">
+          {{ rating.Source }}: {{ rating.Value }}
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

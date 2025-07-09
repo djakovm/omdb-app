@@ -1,34 +1,42 @@
-<div>
+<div class="container mt-4">
   <h2>Search Movies & Series</h2>
 
   <input
     [(ngModel)]="query"
     (input)="search()"
+    class="form-control"
     placeholder="Search titles..."
   />
 
-  <div *ngIf="results$ | async as results">
-    @for (result of results; track result.imdbID) {
-      @if (result.Type === 'movie' || result.Type === 'series') {
-        <div>
-          <a
-            [routerLink]="['/', result.Type === 'movie' ? 'movies' : 'series', result.imdbID]"
-          >
-            <div>
-              <img
-                [src]="result.Poster !== 'N/A' ? result.Poster : 'assets/no-image.png'"
-                alt="{{ result.Title }}"
-              />
-              <div>
-                <h5>{{ result.Title }}</h5>
-                <p>
-                  {{ result.Year }} • {{ result.Type | titlecase }}
-                </p>
-              </div>
-            </div>
-          </a>
+  @if (results$ | async; as results) { @if (results.length > 0) {
+  <div class="row mt-4">
+    @for (result of results; track result.imdbID) { @if (result.Type === 'movie'
+    || result.Type === 'series') {
+    <div class="col-md-4 mb-3">
+      <a
+        class="text-decoration-none text-dark"
+        [routerLink]="['/', result.Type === 'movie' ? 'movies' : 'series', result.imdbID]"
+      >
+        <div class="card h-100">
+          <img
+            [src]="result.Poster !== 'N/A' ? result.Poster : 'assets/no-image.png'"
+            class="card-img-top"
+            alt="{{ result.Title }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ result.Title }}</h5>
+            <p class="card-text">
+              {{ result.Year }} • {{ result.Type | titlecase }}
+            </p>
+          </div>
         </div>
-      }
-    }
+      </a>
+    </div>
+    } }
   </div>
+  } @else { @if (query.length >= 3) {
+  <div class="mt-4 text-muted">
+    No results found for "<strong>{{ query }}</strong>"
+  </div>
+  } } }
 </div>
