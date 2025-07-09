@@ -1,0 +1,34 @@
+<div>
+  <h2>Search Movies & Series</h2>
+
+  <input
+    [(ngModel)]="query"
+    (input)="search()"
+    placeholder="Search titles..."
+  />
+
+  <div *ngIf="results$ | async as results">
+    @for (result of results; track result.imdbID) {
+      @if (result.Type === 'movie' || result.Type === 'series') {
+        <div>
+          <a
+            [routerLink]="['/', result.Type === 'movie' ? 'movies' : 'series', result.imdbID]"
+          >
+            <div>
+              <img
+                [src]="result.Poster !== 'N/A' ? result.Poster : 'assets/no-image.png'"
+                alt="{{ result.Title }}"
+              />
+              <div>
+                <h5>{{ result.Title }}</h5>
+                <p>
+                  {{ result.Year }} • {{ result.Type | titlecase }}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      }
+    }
+  </div>
+</div>
