@@ -1,39 +1,44 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { OmdbService } from '../../services/omdb';
-import { Observable, switchMap, tap } from 'rxjs';
-import { OmdbItem } from '../../models/omdb.model';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, Location } from '@angular/common';
+
+interface EpisodeState {
+  fromShowId: string;
+  episodeTitle: string;
+  episodeReleased: string;
+  episodeRating?: string;
+  seasonNumber: string;
+  episodeNumber: string;
+  showTitle: string;
+}
 
 @Component({
   selector: 'app-episode-detail',
-  imports: [CommonModule, AsyncPipe, RouterModule],
+  imports: [CommonModule],
   templateUrl: './episode-detail.html',
-  styleUrl: './episode-detail.css',
 })
 export class EpisodeDetail implements OnInit {
-  private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly omdbService = inject(OmdbService);
+  private readonly location = inject(Location);
 
-  episode$!: Observable<OmdbItem>;
-  episodeDetail = history.state;
+  episodeState: EpisodeState = history.state as EpisodeState;
   season = '';
   episodeNumber = '';
-  fromShowId = history.state.fromShowId;
-
+  episodeTitle = '';
+  episodeReleased = '';
+  episodeRating = '';
+  showTitle = '';
 
   ngOnInit() {
+    if (this.episodeState) {
+      this.episodeTitle = this.episodeState.episodeTitle;
+      this.episodeReleased = this.episodeState.episodeReleased;
+      this.episodeRating = this.episodeState.episodeRating || '';
+      this.season = this.episodeState.seasonNumber;
+      this.episodeNumber = this.episodeState.episodeNumber;
+      this.showTitle = this.episodeState.showTitle;
+    }
+  }
 
-    this.episode$ = this.activatedRoute.paramMap.pipe(
-      tap((params) => {
-        this.season = params.get('season')!;
-        this.episodeNumber = params.get('episode')!;
-      }),
-      switchMap((params) => {
-        const imdbID = params.get('id')!;
-        return this.omdbService.getById(imdbID);
-      })
-    );
+  goBack(): void {
+    this.location.back();
   }
 }

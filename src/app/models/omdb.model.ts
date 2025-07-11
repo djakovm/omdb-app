@@ -21,6 +21,7 @@ export interface OmdbSeasonResponse {
     Episode: string;
     Released: string;
     imdbID: string;
+    imdbRating?: string;
   }[];
   totalSeasons?: string;
 }

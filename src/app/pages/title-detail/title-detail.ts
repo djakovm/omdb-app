@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-title-detail',
-  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './title-detail.html',
 })

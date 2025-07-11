@@ -1,20 +1,20 @@
 <div class="container py-4">
-  <a
-    [routerLink]="['']"
+  <button
+    (click)="goBack()"
     class="btn btn-outline-secondary mb-3"
   >
-    Back to Home
-  </a>
+    <i class="bi bi-arrow-left me-1"></i> Back to {{ showTitle || 'Show' }}
+  </button>
 
-  @if (episode$ | async; as episode) {
-  <h2>{{ episode.Title }}</h2>
-  <p>
-    <strong>Season:</strong> {{ season }} | <strong>Episode:</strong> {{
-    episodeNumber }}
-  </p>
-  <p><strong>Released:</strong> {{ episode.Released }}</p>
-  <p><strong>Plot:</strong> {{ episode.Plot }}</p>
-  <p><strong>Actors:</strong> {{ episode.Actors }}</p>
-  <p><strong>Director:</strong> {{ episode.Director }}</p>
+  @if (episodeTitle) {
+    <h6 class="text-muted mb-1">{{ showTitle }}</h6>
+    <h2>{{ episodeTitle }}</h2>
+    <p>
+      <strong>Season:</strong> {{ season }} | <strong>Episode:</strong> {{ episodeNumber }}
+    </p>
+    <p><strong>Released:</strong> {{ episodeReleased }}</p>
+    @if (episodeRating) {
+      <p><strong>Rating:</strong> {{ episodeRating }}</p>
+    }
   }
 </div>

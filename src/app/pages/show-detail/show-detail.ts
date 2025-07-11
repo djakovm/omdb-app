@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { OmdbService } from '../../services/omdb';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
-import { CommonModule, AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, AsyncPipe} from '@angular/common';
 import { OmdbItem, OmdbSeasonResponse } from '../../models/omdb.model';
 import { Observable } from 'rxjs';
 import { TitleDetail } from '../title-detail/title-detail';
@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-show-detail',
-  standalone: true,
   imports: [
     CommonModule,
     AsyncPipe,
@@ -20,7 +19,6 @@ import { RouterModule } from '@angular/router';
     TitleDetail,
   ],
   templateUrl: './show-detail.html',
-  styleUrl: './show-detail.css',
 })
 export class ShowDetail implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -44,16 +42,15 @@ export class ShowDetail implements OnInit {
       }),
       tap((show) => {
         if (show.totalSeasons) {
-          this.loadSeasons(show.totalSeasons);
+          this.loadSeasons(+show.totalSeasons);
         }
       })
     );
   }
 
-  loadSeasons(totalSeasons: string) {
-  const count = parseInt(totalSeasons, 10);
+  loadSeasons(totalSeasons: number) {
   this.seasonOptions = [];
-  for (let i = 1; i <= count; i++) {
+  for (let i = 1; i <= totalSeasons; i++) {
     this.seasonOptions.push(i);
   }
 }
@@ -64,8 +61,6 @@ export class ShowDetail implements OnInit {
       .getSeasonEpisodes(this.currentShowId, +season)
       .subscribe((response) => {
         this.episodes = response.Episodes;
-        console.log(`Fetched episodes for season ${season}:`, this.episodes);
-
       });
   }
 }

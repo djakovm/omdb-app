@@ -23,11 +23,19 @@
       <div class="col">
         <a
           [routerLink]="['/shows', show.imdbID, 'episode', selectedSeason, ep.Episode]"
-          [state]="{ fromShowId: show.imdbID }"
+          [state]="{
+            fromShowId: show.imdbID,
+            episodeTitle: ep.Title,
+            episodeReleased: ep.Released,
+            episodeRating: ep.imdbRating,
+            seasonNumber: selectedSeason,
+            episodeNumber: ep.Episode,
+            showTitle: show.Title
+          }"
           class="text-decoration-none"
         >
           <div
-            class="border rounded p-3 h-100 shadow-sm hover-shadow transition"
+            class="border rounded p-3 h-100 "
           >
             <h6 class="mb-1">
               <strong>S{{ selectedSeason }}E{{ ep.Episode }}:</strong> {{

@@ -10,7 +10,6 @@ import { TitleDetail } from '../title-detail/title-detail';
   selector: 'app-movie-detail',
   imports: [CommonModule, RouterModule, TitleDetail],
   templateUrl: './movie-detail.html',
-  styleUrl: './movie-detail.css'
 })
 export class MovieDetail implements OnInit {
 
